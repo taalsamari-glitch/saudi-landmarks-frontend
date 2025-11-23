@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bayn – Saudi Landmarks Classifier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#E4C49B] text-[#5B3A29] min-h-screen flex flex-col">
+
+
+  <!-- HERO WITH VIDEO BACKGROUND -->
+  <section class="relative w-full min-h-[70vh] flex items-center overflow-hidden">
+
+
+    <video
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source src="assets/horse-background.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-transparent"></div>
+
+    <!-- Hero content -->
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-4 pt-10 pb-16 flex flex-col items-center gap-10 text-center">
+
+
+      <div class="space-y-1 mt-10">
+        <h1 class="text-4xl md:text-5xl font-bold text-white tracking-wide">
+          بيّن
+        </h1>
+        <p class="text-sm md:text-base text-white/70 tracking-wide">
+          Bayan
+        </p>
+      </div>
+
+      <div class="max-w-xl space-y-5">
+        <h2 class="text-lg md:text-2xl font-semibold text-slate-50 leading-snug">
+          Capture the moment,<br class="hidden md:block" />
+          let AI reveal the story behind it.
+        </h2>
+
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            class="inline-flex items-center justify-center px-6 py-2.5 rounded-full bg-[#E4C49B] text-[#5B3A29] font-semibold text-sm shadow-md hover:bg-[#f0d7a8] transition"
+            onclick="document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });"
+          >
+            Try it now
+          </button>
+          <span class="text-xs md:text-sm text-slate-200/80">
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="h-px bg-[#C99D68]/70 max-w-5xl mx-auto w-full"></div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="flex-1 bg-[#E4C49B]">
+    <div class="relative max-w-5xl mx-auto px-4">
+
+      <div class="-mt-10 md:-mt-14 mb-12 bg-[#F8E8CF] rounded-3xl shadow-[0_18px_40px_rgba(0,0,0,0.12)] border border-[#C99D68]/60 overflow-hidden">
+
+        <!-- ========== UPLOAD SECTION ========== -->
+        <section id="upload-section" class="px-5 md:px-8 pt-7 pb-6">
+          <div class="space-y-4">
+            <div class="space-y-1">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#8C5C2F]">
+              </p>
+              <h2 class="text-lg md:text-xl font-semibold">
+                Upload a Saudi landmark image
+              </h2>
+              <p class="text-sm text-[#5B3A29]">
+              </p>
+            </div>
+
+            <div class="h-px bg-[#C99D68]/60"></div>
+
+
+<form id="upload-form" class="space-y-4">
+  <div class="flex flex-col md:flex-row md:items-center gap-3">
+    <label for="image-input" class="text-sm font-medium md:w-1/3">
+      Choose an image:
+    </label>
+
+    <div class="flex-1">
+      <input
+        type="file"
+        id="image-input"
+        name="image"
+        accept="image/*"
+        onchange="document.getElementById('upload-form').dispatchEvent(new Event('submit'))"
+        class="block w-full text-xs md:text-sm text-[#5B3A29]
+               file:mr-2 file:py-2 file:px-4
+               file:rounded-full file:border-0
+               file:text-xs md:file:text-sm
+               file:font-semibold
+               file:bg-[#5B3A29] file:text-[#F8E8CF]
+               hover:file:bg-[#3f281b]
+               cursor-pointer
+               bg-[#FDF3E3] border border-[#C99D68] rounded-xl py-2 px-2"
+      />
+    </div>
+  </div>
+
+  <button type="submit" id="submit-btn" class="hidden"></button>
+</form>
+
+<!-- Error message -->
+<p
+  id="error"
+  class="hidden text-xs md:text-sm text-[#5B3A29] bg-[#FDE2E2] border border-[#F5B5B5] rounded-xl px-3 py-2"
+></p>
+
+
+        <div class="h-px bg-[#C99D68]/60 w-full"></div>
+
+        <!-- ========== PREVIEW + RESULT SECTION ========== -->
+        <section class="px-5 md:px-8 py-7 space-y-6">
+
+
+          <div id="preview" class="hidden space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="text-sm font-semibold">Selected image preview</h3>
+              <span class="text-[11px] text-[#8C5C2F]">Make sure the landmark is clearly visible</span>
+            </div>
+            <img
+              id="preview-img"
+              class="w-full max-h-80 object-cover rounded-2xl border border-[#C99D68]"
+              alt="Image preview"
+            />
+          </div>
+
+
+          <div id="result" class="hidden pt-3 space-y-6 border-t border-[#C99D68]/60">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#8C5C2F]">
+                </p>
+                <h4 class="text-base md:text-lg font-semibold">Classification result</h4>
+                <p class="text-sm">
+                  Landmark:
+                  <span id="landmark-name" class="font-bold text-[#5B3A29]"></span>
+                </p>
+                <p id="landmark-desc" class="text-xs md:text-sm text-[#5B3A29] leading-relaxed"></p>
+              </div>
+
+              <div class="space-y-2">
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#8C5C2F]">
+                </p>
+                <h4 class="text-base md:text-lg font-semibold">Generated video</h4>
+                <div
+                  id="video-container"
+                  class="aspect-video w-full rounded-2xl bg-[#FDF3E3] border border-[#C99D68] flex items-center justify-center text-xs text-[#5B3A29] text-center px-4"
+                >
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="h-px bg-[#C99D68]/60 w-full"></div>
+
+<!-- ========== ABOUT US SECTION  ========== -->
+<section class="px-5 md:px-8 py-7 space-y-6">
+  <div class="grid md:grid-cols-[1.2fr,1fr] gap-6 md:gap-8 items-center">
+
+
+<div class="space-y-3">
+
+     <h3 class="text-2xl md:text-3xl font-semibold text-[#5B3A29]">
+     About us
+  </h3>
+  <p class="text-xs font-semibold uppercase tracking-[0.15em] text-[#8C5C2F]">
+   We bring Saudi landmarks to life with AI.
+  </p>
+
+ 
+
+  <p class="text-sm md:text-base leading-relaxed text-[#5B3A29]/90">
+    We don’t just classify landmarks — we make them speak. We’re a team on a mission
+    to bring Saudi landmarks to life using AI. Upload a photo and watch our model
+    recognize the landmark and tell its story in a modern, interactive way.
+  </p>
+</div>
+
+    <!-- Image Slider: 3 photos -->
+    <div class="order-first md:order-last">
+      <div class="relative w-full h-48 md:h-64 rounded-2xl border border-[#C99D68] overflow-hidden bg-[#FDF3E3]">
+
+        <!-- Slide 1 -->
+        <div class="about-slide absolute inset-0 w-full h-full opacity-100 transition-opacity duration-700">
+          <img src="assets/1.jpg" class="w-full h-full object-cover" />
+          <div class="absolute bottom-0 left-0 right-0 bg-black/45 text-white text-sm px-3 py-2">
+            Albalad – Jeddah
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="about-slide absolute inset-0 w-full h-full opacity-0 transition-opacity duration-700">
+          <img src="assets/2.jpg" class="w-full h-full object-cover" />
+          <div class="absolute bottom-0 left-0 right-0 bg-black/45 text-white text-sm px-3 py-2">
+            Fifa Mountains – Jazan
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="about-slide absolute inset-0 w-full h-full opacity-0 transition-opacity duration-700">
+          <img src="assets/3.jpg" class="w-full h-full object-cover" />
+          <div class="absolute bottom-0 left-0 right-0 bg-black/45 text-white text-sm px-3 py-2">
+            Asiri Forts – Asir
+          </div>
+        </div>
+
+        <!-- arrows -->
+        <button
+          type="button"
+          id="about-prev"
+          class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center text-lg hover:bg-black/60 transition"
+        >‹</button>
+
+        <button
+          type="button"
+          id="about-next"
+          class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center text-lg hover:bg-black/60 transition"
+        >›</button>
+
+        <!-- dots -->
+        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2">
+          <span class="about-dot w-2 h-2 rounded-full bg-white"></span>
+          <span class="about-dot w-2 h-2 rounded-full bg-white/60"></span>
+          <span class="about-dot w-2 h-2 rounded-full bg-white/60"></span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-3 text-center text-[11px] text-[#5B3A29] bg-[#E4C49B]">
+    Bayn – Saudi Landmarks Classification
+  </footer>
+<script src="script.js"></script>
+</body>
+</html>
