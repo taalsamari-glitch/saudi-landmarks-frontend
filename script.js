@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== Upload Elements =====
+  // ===== Upload elements =====
   const uploadForm = document.getElementById("upload-form");
   const imageInput = document.getElementById("image-input");
   const previewWrapper = document.getElementById("preview");
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const landmarkDescP = document.getElementById("landmark-desc");
   const videoContainer = document.getElementById("video-container");
 
-  // Show preview
+  // Helper: show preview
   function showPreview(file) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -20,69 +20,103 @@ document.addEventListener("DOMContentLoaded", () => {
     reader.readAsDataURL(file);
   }
 
-  // Error helpers
+  // Helpers: error
   function showError(msg) {
+    if (!errorBox) return;
     errorBox.textContent = msg;
     errorBox.classList.remove("hidden");
   }
   function clearError() {
+    if (!errorBox) return;
     errorBox.classList.add("hidden");
   }
 
   // Reset old result
   function resetResult() {
-    resultSection.classList.add("hidden");
-    landmarkNameSpan.textContent = "";
-    landmarkDescP.textContent = "";
-    videoContainer.innerHTML =
-      "The generated video will appear here after the backend is connected.";
+    if (resultSection) resultSection.classList.add("hidden");
+    if (landmarkNameSpan) landmarkNameSpan.textContent = "";
+    if (landmarkDescP) landmarkDescP.textContent = "";
+    if (videoContainer) {
+      videoContainer.innerHTML =
+        "The generated video will appear here after the backend is connected.";
+    }
   }
 
-  // ===== Upload Handler =====
+  // Convert normal YouTube URL to embed URL
+  function getYouTubeEmbedUrl(url) {
+  try {
+    const u = new URL(url);
+    let id = "";
+
+    // youtu.be short link
+    if (u.hostname.includes("youtu.be")) {
+      id = u.pathname.slice(1);
+    }
+    // youtube.com/watch?v=xxxx
+    else if (u.hostname.includes("youtube.com")) {
+      id = u.searchParams.get("v") || "";
+    }
+
+    if (!id) return url;
+
+    // clean embed with minimal branding
+    return `https://www.youtube.com/embed/${id}?modestbranding=1&rel=0&showinfo=0&controls=1`;
+  } catch {
+    return url;
+  }
+}
+
+
+  // ===== Upload handler =====
   if (uploadForm) {
-    uploadForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      clearError();
-      resetResult();
+  uploadForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    clearError();
+    resetResult();
 
-      const file = imageInput.files[0];
-      if (!file) return showError("Please select an image.");
+    const file = imageInput.files[0];
+    if (!file) {
+      showError("Please select an image.");
+      return;
+    }
 
-      showPreview(file);
+    // Preview
+    showPreview(file);
 
-      const formData = new FormData();
-      formData.append("image", file);
+    // Mock response (test only)
+    const data = {
+      landmark_name: "Almasmak",
+      description: "Historic district in Riyadh, known for its traditional buildings.",
+      youtube_url: "https://www.youtube.com/watch?v=vDfGxQQ589sj7VfD"
+    };
 
-      // Replace with your backend URL
-      const API_URL = "https://your-backend.com/api/classify-and-generate";
+    // Text result
+    if (landmarkNameSpan) {
+      landmarkNameSpan.textContent = data.landmark_name;
+    }
+    if (landmarkDescP) {
+      landmarkDescP.textContent = data.description;
+    }
 
-      try {
-        const res = await fetch(API_URL, { method: "POST", body: formData });
-        if (!res.ok) throw new Error();
+    // YouTube video
+    if (videoContainer) {
+      const embedUrl = getYouTubeEmbedUrl(data.youtube_url);
+      videoContainer.innerHTML = `
+        <iframe
+          src="${embedUrl}"
+          class="w-full h-full rounded-2xl"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      `;
+    }
 
-        const data = await res.json();
+    if (resultSection) resultSection.classList.remove("hidden");
+  });
+}
 
-        // Show text results
-        landmarkNameSpan.textContent = data.landmark_name || "";
-        landmarkDescP.textContent = data.description || "";
-
-        // Show video
-        if (data.video_url) {
-          videoContainer.innerHTML = `
-            <video controls class="w-full h-full rounded-2xl">
-              <source src="${data.video_url}" type="video/mp4" />
-            </video>
-          `;
-        }
-
-        resultSection.classList.remove("hidden");
-      } catch (err) {
-        showError("Backend error. Try again.");
-      }
-    });
-  }
-
-  // ===== About Slider =====
+  // ===== About slider (if you have slides) =====
   const slides = document.querySelectorAll(".about-slide");
   const dots = document.querySelectorAll(".about-dot");
   const prevBtn = document.getElementById("about-prev");
@@ -122,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
       next();
       start();
     };
-
     if (prevBtn) prevBtn.onclick = () => {
       prev();
       start();
