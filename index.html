@@ -170,91 +170,101 @@
 
         <div class="h-px bg-[#C99D68]/60 w-full"></div>
 
-<!-- ========== ABOUT US SECTION  ========== -->
-<section class="px-5 md:px-8 py-7 space-y-6">
-  <div class="grid md:grid-cols-[1.2fr,1fr] gap-6 md:gap-8 items-center">
+        <!-- ========== ABOUT US SECTION ========== -->
+        <section class="px-5 md:px-8 py-7 space-y-6">
+          <div class="grid md:grid-cols-[1.2fr,1fr] gap-6 md:gap-8 items-center">
 
+            <!-- Text -->
+            <div class="space-y-4">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#8C5C2F]">
+                About us
+              </p>
 
-<div class="space-y-3">
+              <h3 class="text-xl md:text-2xl font-semibold text-[#5B3A29]">
+                We bring Saudi landmarks to life with AI.
+              </h3>
 
-     <h3 class="text-2xl md:text-3xl font-semibold text-[#5B3A29]">
-     About us
-  </h3>
-  <p class="text-xs font-semibold uppercase tracking-[0.15em] text-[#8C5C2F]">
-   We bring Saudi landmarks to life with AI.
-  </p>
+              <p class="italic text-sm md:text-base text-[#8C5C2F]">
+                We don’t just classify landmarks — we make them speak.
+              </p>
 
- 
+              <p class="text-sm md:text-base leading-relaxed text-[#5B3A29]">
+                Upload a photo of a Saudi landmark and let our model recognize it, then
+                generate an instant video story. Our goal is to make exploring Saudi
+                Arabia feel more interactive, modern, and unforgettable.
+              </p>
+            </div>
 
-  <p class="text-sm md:text-base leading-relaxed text-[#5B3A29]/90">
-    We don’t just classify landmarks — we make them speak. We’re a team on a mission
-    to bring Saudi landmarks to life using AI. Upload a photo and watch our model
-    recognize the landmark and tell its story in a modern, interactive way.
-  </p>
-</div>
+            <!-- Slider -->
+            <div class="relative">
+              <div class="overflow-hidden rounded-2xl border border-[#C99D68]/60 bg-[#FDF3E3]">
+                <div id="about-slider" class="flex transition-transform duration-500 ease-out">
 
-    <!-- Image Slider: 3 photos -->
-    <div class="order-first md:order-last">
-      <div class="relative w-full h-48 md:h-64 rounded-2xl border border-[#C99D68] overflow-hidden bg-[#FDF3E3]">
+                  <!-- Slide 1 -->
+                  <div class="about-slide min-w-full h-56 md:h-64 relative">
+                    <img
+                      src="./assets/1.JPG"
+                      alt="Albalad – Jeddah"
+                      class="w-full h-full object-cover rounded-2xl"
+                    />
+                    <div class="absolute bottom-3 left-3 bg-black/55 text-white text-xs px-3 py-1 rounded-full">
+                      Albalad – Jeddah
+                    </div>
+                  </div>
 
-        <div class="about-slide min-w-full h-56 md:h-64 relative">
-          <img
-            src="./assets/1.JPG"
-            alt="Albalad – Jeddah"
-            class="w-full h-full object-cover rounded-2xl"
-          />
-          <div class="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
-            Albalad – Jeddah
+                  <!-- Slide 2 -->
+                  <div class="about-slide min-w-full h-56 md:h-64 relative">
+                    <img
+                      src="./assets/2.JPG"
+                      alt="Fifa Mountains – Jazan"
+                      class="w-full h-full object-cover rounded-2xl"
+                    />
+                    <div class="absolute bottom-3 left-3 bg-black/55 text-white text-xs px-3 py-1 rounded-full">
+                      Fifa Mountains – Jazan
+                    </div>
+                  </div>
+
+                  <!-- Slide 3 -->
+                  <div class="about-slide min-w-full h-56 md:h-64 relative">
+                    <img
+                      src="./assets/3.JPG"
+                      alt="Asiri Forts – Asir"
+                      class="w-full h-full object-cover rounded-2xl"
+                    />
+                    <div class="absolute bottom-3 left-3 bg-black/55 text-white text-xs px-3 py-1 rounded-full">
+                      Asiri Forts – Asir
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Controls -->
+              <button
+                id="about-prev"
+                type="button"
+                class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-[#5B3A29]/80 text-[#FDF3E3] text-sm"
+              >
+                ‹
+              </button>
+              <button
+                id="about-next"
+                type="button"
+                class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full bg-[#5B3A29]/80 text-[#FDF3E3] text-sm"
+              >
+                ›
+              </button>
+
+              <!-- Dots -->
+              <div class="mt-3 flex items-center justify-center gap-2">
+                <span class="about-dot w-2 h-2 rounded-full bg-[#5B3A29]/80"></span>
+                <span class="about-dot w-2 h-2 rounded-full bg-[#5B3A29]/40"></span>
+                <span class="about-dot w-2 h-2 rounded-full bg-[#5B3A29]/40"></span>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="about-slide min-w-full h-56 md:h-64 relative">
-          <img
-            src="./assets/2.JPG"
-            alt="Fifa Mountains – Jazan"
-            class="w-full h-full object-cover rounded-2xl"
-          />
-          <div class="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
-            Fifa Mountains – Jazan
-          </div>
-        </div>
-
-        <div class="about-slide min-w-full h-56 md:h-64 relative">
-          <img
-            src="./assets/3.JPG"
-            alt="Asiri Forts – Asir"
-            class="w-full h-full object-cover rounded-2xl"
-          />
-          <div class="absolute bottom-3 left-3 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
-            Asiri Forts – Asir
-          </div>
-        </div>
-
-        <!-- arrows -->
-        <button
-          type="button"
-          id="about-prev"
-          class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center text-lg hover:bg-black/60 transition"
-        >‹</button>
-
-        <button
-          type="button"
-          id="about-next"
-          class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center text-lg hover:bg-black/60 transition"
-        >›</button>
-
-        <!-- dots -->
-        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2">
-          <span class="about-dot w-2 h-2 rounded-full bg-white"></span>
-          <span class="about-dot w-2 h-2 rounded-full bg-white/60"></span>
-          <span class="about-dot w-2 h-2 rounded-full bg-white/60"></span>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
 
       </div>
     </div>
